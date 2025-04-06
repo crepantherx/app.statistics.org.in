@@ -76,7 +76,7 @@ const Dashboard = () => {
 
   return (
     <div className="px-6 py-0" style={{ margin: '25px' }}>
-      <Typography 
+      {/* <Typography 
         variant="h4" 
         component="h1" 
         sx={{ 
@@ -87,8 +87,8 @@ const Dashboard = () => {
         }}
       >
         Welcome to Deep Statistics
-      </Typography>
-      <Typography 
+      </Typography> */}
+      {/* <Typography 
         variant="subtitle1" 
         className="text-gray-400" 
         sx={{ 
@@ -97,10 +97,10 @@ const Dashboard = () => {
         }}
       >
         Your AI-powered data analysis platform
-      </Typography>
+      </Typography> */}
 
       {/* Quick Start */}
-      <Paper className="p-6 mb-4">
+      <Paper className="p-6 mb-4" style={{ margin: '25px', padding: '25px' }}>
         <Box className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6">
           <Box>
             <Typography variant="h5" className="font-bold mb-2">
@@ -122,7 +122,7 @@ const Dashboard = () => {
           </Button>
         </Box>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={3} style={{ margin: '25px' }}>
           {features.map((feature) => (
             <Grid item xs={12} sm={6} md={4} key={feature.title}>
               <Card 
@@ -164,84 +164,10 @@ const Dashboard = () => {
         </Grid>
       </Paper>
 
-      {/* Dashboard Stats */}
-      <Grid container spacing={3} className="mb-4">
-        <Grid item xs={12} md={8}>
-          <Paper className="data-card p-6">
-            <Typography variant="h6" className="font-bold mb-6">
-              Activity Overview
-            </Typography>
-            <Box sx={{ height: 400, width: '100%' }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart
-                  data={activityData}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#2d2d2d" />
-                  <XAxis dataKey="name" stroke="#888" />
-                  <YAxis stroke="#888" />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#1e1e1e', 
-                      borderColor: '#2d2d2d',
-                      color: '#fff',
-                      padding: '10px'
-                    }} 
-                  />
-                  <Area 
-                    type="monotone" 
-                    dataKey="value" 
-                    stroke="#6366f1" 
-                    fill="#6366f1" 
-                    fillOpacity={0.2} 
-                    strokeWidth={2}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </Box>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Paper className="data-card p-6 h-full">
-            <Typography variant="h6" className="font-bold mb-6">
-              Data Sources
-            </Typography>
-            <Box sx={{ height: 400, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={pieData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={80}
-                    outerRadius={120}
-                    fill="#8884d8"
-                    paddingAngle={5}
-                    dataKey="value"
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                    labelLine={true}
-                  >
-                    {pieData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#1e1e1e', 
-                      borderColor: '#2d2d2d',
-                      color: '#fff',
-                      padding: '10px'
-                    }} 
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-            </Box>
-          </Paper>
-        </Grid>
-      </Grid>
+
 
       {/* Recent Datasets */}
-      <Paper className="data-card p-6">
+      <Paper className="data-card p-6" style={{ padding: '25px', margin: '25px' }}>
         <Typography variant="h6" className="font-bold mb-4">
           Recent Datasets
         </Typography>
@@ -288,6 +214,84 @@ const Dashboard = () => {
           </Box>
         )}
       </Paper>
+
+
+      {/* Dashboard Stats */}
+      <Grid container spacing={3} className="mb-4" style={{ padding: '25px' }}>
+        <Grid item xs={12} md={8}>
+          <Paper className="data-card p-6">
+            <Typography variant="h6" className="font-bold mb-6">
+              Activity Overview
+            </Typography>
+            <Box sx={{ height: 400, width: 600 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart
+                  data={activityData}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#2d2d2d" />
+                  <XAxis dataKey="name" stroke="#888" />
+                  <YAxis stroke="#888" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#1e1e1e', 
+                      borderColor: '#2d2d2d',
+                      color: '#fff',
+                      padding: '10px'
+                    }} 
+                  />
+                  <Area 
+                    type="monotone" 
+                    dataKey="value" 
+                    stroke="#6366f1" 
+                    fill="#6366f1" 
+                    fillOpacity={0.2} 
+                    strokeWidth={2}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </Box>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Paper className="data-card p-6 h-full">
+            <Typography variant="h6" className="font-bold mb-6">
+              Data Sources
+            </Typography>
+            <Box sx={{ height: 400, width: 600, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={pieData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={80}
+                    outerRadius={120}
+                    fill="#8884d8"
+                    paddingAngle={5}
+                    dataKey="value"
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    labelLine={true}
+                  >
+                    {pieData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#1e1e1e', 
+                      borderColor: '#2d2d2d',
+                      color: '#fff',
+                      padding: '10px'
+                    }} 
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </Box>
+          </Paper>
+        </Grid>
+      </Grid>
+
     </div>
   );
 };
