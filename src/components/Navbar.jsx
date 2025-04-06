@@ -92,16 +92,18 @@ const Navbar = ({ onMenuClick }) => {
       <Toolbar sx={{ minHeight: '48px !important', height: '48px', px: 2 }}>
         <Typography
           variant="h6"
-          noWrap
-          component={Link}
-          to="/"
-          sx={{ 
-            display: { xs: 'none', sm: 'block' }, 
-            textDecoration: 'none', 
+          component="a"
+          href="https://deep.statistics.org.in"
+          sx={{
+            textDecoration: 'none',
             color: 'white',
             fontFamily: 'Tourney',
             fontSize: '1.2rem',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            marginRight: 3,
+            '&:hover': {
+              opacity: 0.8,
+            },
           }}
         >
           Deep Statistics
