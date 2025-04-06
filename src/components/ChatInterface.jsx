@@ -7,6 +7,7 @@ import MicOffIcon from '@mui/icons-material/MicOff';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import InsightsIcon from '@mui/icons-material/Insights';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import PageWrapper from './PageWrapper';
 
 const ChatInterface = ({ data, statistics }) => {
   const [messages, setMessages] = useState([]);
@@ -48,7 +49,7 @@ const ChatInterface = ({ data, statistics }) => {
   // If no data, show message to upload data
   if (!data || !statistics) {
     return (
-      <div className="p-4">
+      <PageWrapper>
         <Typography variant="h4" component="h1" gutterBottom className="font-bold">
           Chat Interface
         </Typography>
@@ -74,7 +75,7 @@ const ChatInterface = ({ data, statistics }) => {
             </IconButton>
           </Box>
         </Paper>
-      </div>
+      </PageWrapper>
     );
   }
 
@@ -403,7 +404,7 @@ const ChatInterface = ({ data, statistics }) => {
   };
 
   return (
-    <div className="p-4">
+    <PageWrapper>
       <Typography variant="h4" component="h1" gutterBottom className="font-bold">
         Chat Interface
       </Typography>
@@ -501,7 +502,7 @@ const ChatInterface = ({ data, statistics }) => {
           </Box>
         </Box>
       </Paper>
-    </div>
+    </PageWrapper>
   );
 };
 
