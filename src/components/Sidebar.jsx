@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Tooltip } from '@mui/material';
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Tooltip, IconButton } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
@@ -9,8 +9,9 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import ChatIcon from '@mui/icons-material/Chat';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import MenuIcon from '@mui/icons-material/Menu';
 
-const Sidebar = ({ collapsed }) => {
+const Sidebar = ({ collapsed, onMenuClick }) => {
   const location = useLocation();
 
   const menuItems = [
@@ -36,33 +37,35 @@ const Sidebar = ({ collapsed }) => {
         justifyContent: 'space-between',
         height: '100%',
         overflow: 'hidden',
+        width: collapsed ? '64px' : '240px',
       }}
     >
       <Box>
         <Box
           sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: collapsed ? 'center' : 'flex-start',
-            padding: 2,
-            height: '64px',
+            position: 'relative',
+            height: '48px',
+            width: '100%',
+            backgroundColor: 'inherit',
           }}
         >
-          {!collapsed && (
-            <Box component={Link} to="/" sx={{ textDecoration: 'none', color: 'white' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <InsightsIcon color="primary" sx={{ fontSize: 28, mr: 1 }} />
-                <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem', fontFamily: 'Tourney' }}>Deep Statistics</Box>
-              </Box>
-            </Box>
-          )}
-          {collapsed && (
-            <Tooltip title="Deep Statistics" placement="right">
-              <Box component={Link} to="/">
-                <InsightsIcon color="primary" sx={{ fontSize: 28 }} />
-              </Box>
-            </Tooltip>
-          )}
+          <IconButton
+            size="small"
+            color="inherit"
+            aria-label="toggle sidebar"
+            onClick={onMenuClick}
+            sx={{
+              position: 'absolute',
+              right: '12px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              }
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
         </Box>
         <Divider />
         <List>

@@ -63,18 +63,20 @@ function App() {
       <CssBaseline />
       <Router>
         <div className="flex h-screen overflow-hidden bg-[#121212]">
-          <Sidebar collapsed={sidebarCollapsed} />
+          <Sidebar collapsed={sidebarCollapsed} onMenuClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
           <div className="flex flex-col flex-1">
-            <Navbar onMenuClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
-            <div className="flex-1 overflow-y-auto bg-[#1e1e1e]">
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/upload" element={<DataUpload setDataSource={setDataSource} setCurrentData={setCurrentData} />} />
-                <Route path="/analysis" element={<DataAnalysis data={currentData} setStatistics={setStatistics} />} />
-                <Route path="/visualization" element={<DataVisualization data={currentData} statistics={statistics} />} />
-                <Route path="/insights" element={<AIInsights data={currentData} statistics={statistics} />} />
-                <Route path="/chat" element={<ChatInterface data={currentData} statistics={statistics} />} />
-              </Routes>
+            <Navbar />
+            <div className="flex-1 overflow-y-auto">
+              <div className="h-full bg-[#1e1e1e] ml-6">
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/upload" element={<DataUpload setDataSource={setDataSource} setCurrentData={setCurrentData} />} />
+                  <Route path="/analysis" element={<DataAnalysis data={currentData} setStatistics={setStatistics} />} />
+                  <Route path="/visualization" element={<DataVisualization data={currentData} statistics={statistics} />} />
+                  <Route path="/insights" element={<AIInsights data={currentData} statistics={statistics} />} />
+                  <Route path="/chat" element={<ChatInterface data={currentData} statistics={statistics} />} />
+                </Routes>
+              </div>
             </div>
           </div>
         </div>
