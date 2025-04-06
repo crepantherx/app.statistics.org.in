@@ -75,7 +75,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="px-6 py-0">
+    <div className="px-6 py-0" style={{ margin: '25px' }}>
       <Typography 
         variant="h4" 
         component="h1" 
@@ -83,7 +83,7 @@ const Dashboard = () => {
           fontSize: '2rem',
           lineHeight: 1.2,
           fontWeight: 'bold',
-          mt: 0
+          mt: 0,
         }}
       >
         Welcome to Deep Statistics
