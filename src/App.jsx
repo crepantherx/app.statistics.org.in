@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import './App.css'
+import './fonts.css'
 
 // Import components
 import Dashboard from './components/Dashboard'
@@ -32,31 +33,51 @@ const darkTheme = createTheme({
   typography: {
     fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
   },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          minHeight: '48px',
+        },
+      },
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          minHeight: '48px !important',
+          padding: '0 16px',
+        },
+      },
+    },
+  },
 })
 
 function App() {
   const [dataSource, setDataSource] = useState(null)
   const [currentData, setCurrentData] = useState(null)
   const [statistics, setStatistics] = useState(null)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
   
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Router>
-        <div className="flex h-screen bg-dark overflow-hidden">
-          <Sidebar />
-          <div className="flex flex-col flex-1 overflow-hidden">
+        <div className="flex h-screen overflow-hidden bg-[#121212]">
+          <Sidebar collapsed={sidebarCollapsed} onMenuClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
+          <div className="flex flex-col flex-1">
             <Navbar />
-            <main className="flex-20 overflow-y-auto bg-dark p-4">
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/upload" element={<DataUpload setDataSource={setDataSource} setCurrentData={setCurrentData} />} />
-                <Route path="/analysis" element={<DataAnalysis data={currentData} setStatistics={setStatistics} />} />
-                <Route path="/visualization" element={<DataVisualization data={currentData} statistics={statistics} />} />
-                <Route path="/insights" element={<AIInsights data={currentData} statistics={statistics} />} />
-                <Route path="/chat" element={<ChatInterface data={currentData} statistics={statistics} />} />
-              </Routes>
-            </main>
+            <div className="flex-1 overflow-y-auto">
+              <div className="h-full bg-[#1e1e1e] ml-6">
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/upload" element={<DataUpload setDataSource={setDataSource} setCurrentData={setCurrentData} />} />
+                  <Route path="/analysis" element={<DataAnalysis data={currentData} setStatistics={setStatistics} />} />
+                  <Route path="/visualization" element={<DataVisualization data={currentData} statistics={statistics} />} />
+                  <Route path="/insights" element={<AIInsights data={currentData} statistics={statistics} />} />
+                  <Route path="/chat" element={<ChatInterface data={currentData} statistics={statistics} />} />
+                </Routes>
+              </div>
+            </div>
           </div>
         </div>
       </Router>

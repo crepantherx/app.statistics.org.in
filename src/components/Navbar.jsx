@@ -49,7 +49,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Navbar = () => {
+const Navbar = ({ onMenuClick }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
@@ -88,74 +88,71 @@ const Navbar = () => {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="relative" className="navbar" elevation={0}>
-        <Toolbar>
+    <AppBar position="static" elevation={0} sx={{ height: '48px', minHeight: '48px' }}>
+      <Toolbar sx={{ minHeight: '48px !important', height: '48px', px: 2 }}>
+        <Typography
+          variant="h6"
+          component="a"
+          href="https://deep.statistics.org.in"
+          sx={{
+            textDecoration: 'none',
+            color: 'white',
+            fontFamily: 'Tourney',
+            fontSize: '1.2rem',
+            fontWeight: 'bold',
+            marginRight: 3,
+            '&:hover': {
+              opacity: 0.8,
+            },
+          }}
+        >
+          Deep Statistics
+        </Typography>
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search data…"
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </Search>
+        <Box sx={{ flexGrow: 1 }} />
+        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <IconButton size="large" aria-label="show help" color="inherit">
+            <HelpOutlineIcon />
+          </IconButton>
           <IconButton
             size="large"
-            edge="start"
+            aria-label="show 17 new notifications"
             color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            <Badge badgeContent={3} color="error">
+              <NotificationsIcon />
+            </Badge>
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{ display: { xs: 'none', sm: 'block' }, textDecoration: 'none', color: 'white' }}
-            className="font-bold"
+          <IconButton
+            size="large"
+            aria-label="settings"
+            color="inherit"
           >
-            DeepStatistics
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search data…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show help" color="inherit">
-              <HelpOutlineIcon />
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={3} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="settings"
-              color="inherit"
-            >
-              <SettingsIcon />
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
+            <SettingsIcon />
+          </IconButton>
+          <IconButton
+            size="large"
+            edge="end"
+            aria-label="account of current user"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            onClick={handleProfileMenuOpen}
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+        </Box>
+      </Toolbar>
       {renderMenu}
-    </Box>
+    </AppBar>
   );
 };
 
