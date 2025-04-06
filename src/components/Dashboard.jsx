@@ -86,7 +86,7 @@ const Dashboard = () => {
           mt: 0
         }}
       >
-        Welcome to DeepStatistics
+        Welcome to Deep Statistics
       </Typography>
       <Typography 
         variant="subtitle1" 

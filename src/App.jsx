@@ -55,7 +55,7 @@ function App() {
   const [dataSource, setDataSource] = useState(null)
   const [currentData, setCurrentData] = useState(null)
   const [statistics, setStatistics] = useState(null)
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
   
   return (
     <ThemeProvider theme={darkTheme}>

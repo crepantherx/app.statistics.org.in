@@ -52,12 +52,12 @@ const Sidebar = ({ collapsed }) => {
             <Box component={Link} to="/" sx={{ textDecoration: 'none', color: 'white' }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <InsightsIcon color="primary" sx={{ fontSize: 28, mr: 1 }} />
-                <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>DeepStats</Box>
+                <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Deep Statistics</Box>
               </Box>
             </Box>
           )}
           {collapsed && (
-            <Tooltip title="DeepStatistics" placement="right">
+            <Tooltip title="Deep Statistics" placement="right">
               <Box component={Link} to="/">
                 <InsightsIcon color="primary" sx={{ fontSize: 28 }} />
               </Box>

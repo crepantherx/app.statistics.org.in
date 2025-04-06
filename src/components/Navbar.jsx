@@ -108,7 +108,7 @@ const Navbar = ({ onMenuClick }) => {
           sx={{ display: { xs: 'none', sm: 'block' }, textDecoration: 'none', color: 'white' }}
           className="font-bold"
         >
-          DeepStatistics
+          Deep Statistics
         </Typography>
         <Search>
           <SearchIconWrapper>
