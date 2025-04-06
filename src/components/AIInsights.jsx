@@ -184,8 +184,8 @@ const AIInsights = ({ data, statistics }) => {
           <YAxis dataKey="name" type="category" width={150} stroke="#888" />
           <Tooltip 
             contentStyle={{ 
-              backgroundColor: '#1e1e1e', 
-              borderColor: '#2d2d2d',
+              backgroundColor: '#000000',
+              borderColor: '#000000',
               color: '#fff' 
             }} 
           />
@@ -211,8 +211,8 @@ const AIInsights = ({ data, statistics }) => {
           <YAxis stroke="#888" />
           <Tooltip 
             contentStyle={{ 
-              backgroundColor: '#1e1e1e', 
-              borderColor: '#2d2d2d',
+              backgroundColor: '#000000',
+              borderColor: '#050505',
               color: '#fff' 
             }} 
           />

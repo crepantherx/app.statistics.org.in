@@ -20,24 +20,47 @@ const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#6366f1',
+      main: '#00a2ff',
+      light: '#33b4ff',
+      dark: '#0071b2',
     },
     secondary: {
-      main: '#8b5cf6',
+      main: '#ff3366',
+      light: '#ff6b91',
+      dark: '#b22347',
     },
     background: {
-      default: '#121212',
-      paper: '#1e1e1e',
+      default: '#000000',
+      paper: '#000000',
+    },
+    text: {
+      primary: '#ffffff',
+      secondary: 'rgba(255, 255, 255, 0.7)',
     },
   },
   typography: {
     fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+    h4: {
+      fontWeight: 600,
+      letterSpacing: '0.02em',
+    },
+    h5: {
+      fontWeight: 600,
+      letterSpacing: '0.02em',
+    },
+    h6: {
+      fontWeight: 600,
+      letterSpacing: '0.02em',
+    },
   },
   components: {
     MuiAppBar: {
       styleOverrides: {
         root: {
-          minHeight: '48px',
+          backgroundColor: '#000000',
+          backgroundImage: 'none',
+          boxShadow: 'none',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
         },
       },
     },
@@ -46,6 +69,54 @@ const darkTheme = createTheme({
         root: {
           minHeight: '48px !important',
           padding: '0 16px',
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundImage: 'none',
+          backgroundColor: '#000000',
+          borderRadius: '8px',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          '&.data-card': {
+            background: 'linear-gradient(45deg, #000000 30%, #111111 90%)',
+            boxShadow: '0 0 20px rgba(0, 162, 255, 0.15)',
+            transition: 'all 0.3s ease-in-out',
+            '&:hover': {
+              boxShadow: '0 0 30px rgba(0, 162, 255, 0.25)',
+              borderColor: '#00a2ff',
+            },
+          },
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          borderRadius: '4px',
+          '&.MuiButton-contained': {
+            background: 'linear-gradient(45deg, #00a2ff 30%, #0071b2 90%)',
+            boxShadow: '0 0 10px rgba(0, 162, 255, 0.3)',
+            '&:hover': {
+              background: 'linear-gradient(45deg, #33b4ff 30%, #00a2ff 90%)',
+              boxShadow: '0 0 15px rgba(0, 162, 255, 0.4)',
+            },
+          },
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#000000',
+          backgroundImage: 'none',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          transition: 'all 0.3s ease-in-out',
+          '&:hover': {
+            boxShadow: '0 0 30px rgba(0, 162, 255, 0.15)',
+          },
         },
       },
     },
@@ -62,12 +133,12 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Router>
-        <div className="flex h-screen overflow-hidden bg-[#121212]">
+        <div className="flex h-screen overflow-hidden bg-black">
           <Sidebar collapsed={sidebarCollapsed} onMenuClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
           <div className="flex flex-col flex-1">
             <Navbar />
             <div className="flex-1 overflow-y-auto">
-              <div className="h-full bg-[#1e1e1e] ml-6">
+              <div className="h-full bg-black ml-6">
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/upload" element={<DataUpload setDataSource={setDataSource} setCurrentData={setCurrentData} />} />

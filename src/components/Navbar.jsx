@@ -83,14 +83,27 @@ const Navbar = ({ onMenuClick }) => {
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My Account</MenuItem>
       <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={handleMenuClose}><Typography
+          variant="h6"
+          component="a"
+          href="https://deep.statistics.org.in"
+          sx={{
+            textDecoration: 'none',
+            color: 'white',
+            // fontFamily: 'Tourney',
+            // fontSize: '1.2rem',
+            // fontWeight: 'bold',
+          }}
+        >
+          Logout
+        </Typography></MenuItem>
     </Menu>
   );
 
   return (
     <AppBar position="static" elevation={0} sx={{ height: '48px', minHeight: '48px' }}>
       <Toolbar sx={{ minHeight: '48px !important', height: '48px', px: 2 }}>
-        <Typography
+        {/* <Typography
           variant="h6"
           component="a"
           href="https://deep.statistics.org.in"
@@ -107,7 +120,29 @@ const Navbar = ({ onMenuClick }) => {
           }}
         >
           Deep Statistics
-        </Typography>
+        </Typography> */}
+
+        <Typography
+          variant="h6"
+          noWrap
+          component={Link}
+          to="/"
+          sx={{
+            textDecoration: 'none',
+            color: 'white',
+            fontFamily: 'Tourney',
+            fontSize: '1.2rem',
+            fontWeight: 'bold',
+            marginRight: 3,
+            '&:hover': {
+              opacity: 0.8,
+            },
+          }}
+          className="font-bold"
+        >
+        Deep Statistics
+      </Typography>
+
         <Search>
           <SearchIconWrapper>
             <SearchIcon />

@@ -30,14 +30,16 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
 
   return (
     <Box
-      className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''}`}
       sx={{
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         height: '100%',
-        overflow: 'hidden',
         width: collapsed ? '64px' : '240px',
+        bgcolor: 'background.paper',
+        borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+        transition: 'all 0.3s ease',
+        overflow: 'hidden',
       }}
     >
       <Box>
@@ -46,7 +48,8 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
             position: 'relative',
             height: '48px',
             width: '100%',
-            backgroundColor: 'inherit',
+            bgcolor: 'background.paper',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
           }}
         >
           <IconButton
@@ -67,7 +70,6 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
             <MenuIcon />
           </IconButton>
         </Box>
-        <Divider />
         <List>
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
@@ -78,8 +80,11 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
                   minHeight: 48,
                   justifyContent: collapsed ? 'center' : 'initial',
                   px: 2.5,
-                  backgroundColor: location.pathname === item.path ? 'rgba(99, 102, 241, 0.1)' : 'transparent',
-                  borderLeft: location.pathname === item.path ? '3px solid #6366f1' : 'none',
+                  bgcolor: location.pathname === item.path ? 'rgba(0, 162, 255, 0.1)' : 'transparent',
+                  borderLeft: location.pathname === item.path ? '3px solid #00a2ff' : 'none',
+                  '&:hover': {
+                    bgcolor: 'rgba(0, 162, 255, 0.05)',
+                  }
                 }}
               >
                 <Tooltip title={collapsed ? item.text : ''} placement="right">
@@ -88,7 +93,7 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
                       minWidth: 0,
                       mr: collapsed ? 0 : 3,
                       justifyContent: 'center',
-                      color: location.pathname === item.path ? 'primary.main' : 'inherit',
+                      color: location.pathname === item.path ? 'primary.main' : 'text.secondary',
                     }}
                   >
                     {item.icon}
@@ -99,7 +104,7 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
                     primary={item.text} 
                     sx={{ 
                       opacity: collapsed ? 0 : 1,
-                      color: location.pathname === item.path ? 'primary.main' : 'inherit',
+                      color: location.pathname === item.path ? 'primary.main' : 'text.primary',
                     }} 
                   />
                 )}
@@ -109,7 +114,7 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
         </List>
       </Box>
       <Box>
-        <Divider />
+        <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
         <List>
           {bottomMenuItems.map((item) => (
             <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
@@ -120,6 +125,9 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
                   minHeight: 48,
                   justifyContent: collapsed ? 'center' : 'initial',
                   px: 2.5,
+                  '&:hover': {
+                    bgcolor: 'rgba(0, 162, 255, 0.05)',
+                  }
                 }}
               >
                 <Tooltip title={collapsed ? item.text : ''} placement="right">
@@ -128,6 +136,7 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
                       minWidth: 0,
                       mr: collapsed ? 0 : 3,
                       justifyContent: 'center',
+                      color: 'text.secondary',
                     }}
                   >
                     {item.icon}
