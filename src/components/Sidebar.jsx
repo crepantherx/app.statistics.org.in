@@ -52,7 +52,7 @@ const Sidebar = ({ collapsed }) => {
             <Box component={Link} to="/" sx={{ textDecoration: 'none', color: 'white' }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <InsightsIcon color="primary" sx={{ fontSize: 28, mr: 1 }} />
-                <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Deep Statistics</Box>
+                <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem', fontFamily: 'Tourney' }}>Deep Statistics</Box>
               </Box>
             </Box>
           )}
