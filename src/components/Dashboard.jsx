@@ -75,18 +75,32 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="p-4">
-      <Box className="mb-8">
-        <Typography variant="h4" component="h1" className="font-bold mb-2">
-          Welcome to DeepStatistics
-        </Typography>
-        <Typography variant="subtitle1" className="text-gray-400">
-          Your AI-powered data analysis platform
-        </Typography>
-      </Box>
+    <div className="px-6 py-0">
+      <Typography 
+        variant="h4" 
+        component="h1" 
+        sx={{ 
+          fontSize: '2rem',
+          lineHeight: 1.2,
+          fontWeight: 'bold',
+          mt: 0
+        }}
+      >
+        Welcome to DeepStatistics
+      </Typography>
+      <Typography 
+        variant="subtitle1" 
+        className="text-gray-400" 
+        sx={{ 
+          lineHeight: 1.2,
+          mb: 3
+        }}
+      >
+        Your AI-powered data analysis platform
+      </Typography>
 
       {/* Quick Start */}
-      <Paper className="data-card p-6 mb-8">
+      <Paper className="p-6 mb-4">
         <Box className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6">
           <Box>
             <Typography variant="h5" className="font-bold mb-2">
@@ -151,17 +165,17 @@ const Dashboard = () => {
       </Paper>
 
       {/* Dashboard Stats */}
-      <Grid container spacing={3} className="mb-8">
+      <Grid container spacing={3} className="mb-4">
         <Grid item xs={12} md={8}>
-          <Paper className="data-card p-4">
-            <Typography variant="h6" className="font-bold mb-4">
+          <Paper className="data-card p-6">
+            <Typography variant="h6" className="font-bold mb-6">
               Activity Overview
             </Typography>
-            <Box sx={{ height: 300 }}>
+            <Box sx={{ height: 400, width: '100%' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart
                   data={activityData}
-                  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="#2d2d2d" />
                   <XAxis dataKey="name" stroke="#888" />
@@ -170,7 +184,8 @@ const Dashboard = () => {
                     contentStyle={{ 
                       backgroundColor: '#1e1e1e', 
                       borderColor: '#2d2d2d',
-                      color: '#fff' 
+                      color: '#fff',
+                      padding: '10px'
                     }} 
                   />
                   <Area 
@@ -179,6 +194,7 @@ const Dashboard = () => {
                     stroke="#6366f1" 
                     fill="#6366f1" 
                     fillOpacity={0.2} 
+                    strokeWidth={2}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -186,23 +202,24 @@ const Dashboard = () => {
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Paper className="data-card p-4 h-full">
-            <Typography variant="h6" className="font-bold mb-4">
+          <Paper className="data-card p-6 h-full">
+            <Typography variant="h6" className="font-bold mb-6">
               Data Sources
             </Typography>
-            <Box sx={{ height: 300, display: 'flex', justifyContent: 'center' }}>
+            <Box sx={{ height: 400, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={pieData}
                     cx="50%"
                     cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
+                    innerRadius={80}
+                    outerRadius={120}
                     fill="#8884d8"
                     paddingAngle={5}
                     dataKey="value"
                     label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    labelLine={true}
                   >
                     {pieData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -212,7 +229,8 @@ const Dashboard = () => {
                     contentStyle={{ 
                       backgroundColor: '#1e1e1e', 
                       borderColor: '#2d2d2d',
-                      color: '#fff' 
+                      color: '#fff',
+                      padding: '10px'
                     }} 
                   />
                 </PieChart>

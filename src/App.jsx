@@ -32,22 +32,40 @@ const darkTheme = createTheme({
   typography: {
     fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
   },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          minHeight: '48px',
+        },
+      },
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          minHeight: '48px !important',
+          padding: '0 16px',
+        },
+      },
+    },
+  },
 })
 
 function App() {
   const [dataSource, setDataSource] = useState(null)
   const [currentData, setCurrentData] = useState(null)
   const [statistics, setStatistics] = useState(null)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Router>
-        <div className="flex h-screen bg-dark overflow-hidden">
-          <Sidebar />
-          <div className="flex flex-col flex-1 overflow-hidden">
-            <Navbar />
-            <main className="flex-20 overflow-y-auto bg-dark p-4">
+        <div className="flex h-screen overflow-hidden bg-[#121212]">
+          <Sidebar collapsed={sidebarCollapsed} />
+          <div className="flex flex-col flex-1">
+            <Navbar onMenuClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
+            <div className="flex-1 overflow-y-auto bg-[#1e1e1e]">
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/upload" element={<DataUpload setDataSource={setDataSource} setCurrentData={setCurrentData} />} />
@@ -56,7 +74,7 @@ function App() {
                 <Route path="/insights" element={<AIInsights data={currentData} statistics={statistics} />} />
                 <Route path="/chat" element={<ChatInterface data={currentData} statistics={statistics} />} />
               </Routes>
-            </main>
+            </div>
           </div>
         </div>
       </Router>
