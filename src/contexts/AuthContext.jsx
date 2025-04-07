@@ -2,9 +2,11 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext(null);
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = process.env.NODE_ENV === 'development' 
+  ? 'http://localhost:8000'
+  : 'https://deep.statistics.org.in';
 
-export const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [csrfToken, setCsrfToken] = useState('');
@@ -39,12 +41,16 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Check if user is authenticated
     const checkAuth = async () => {
+      if (!csrfToken) return;
+
       try {
-        console.log('Checking authentication...');
+        console.log('Checking authentication with CSRF token:', csrfToken);
         const response = await fetch(`${API_BASE_URL}/api/auth/check/`, {
+          method: 'GET',
           credentials: 'include',
           headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'X-CSRFToken': csrfToken,
           }
         });
@@ -54,35 +60,40 @@ export const AuthProvider = ({ children }) => {
           const data = await response.json();
           console.log('Auth data:', data);
           setUser(data.user);
+          if (!data.user) {
+            window.location.replace(`${API_BASE_URL}/login/`);
+          }
         } else {
           console.log('Auth check failed');
           const text = await response.text();
           console.log('Error response:', text);
+          window.location.replace(`${API_BASE_URL}/login/`);
         }
       } catch (error) {
         console.error('Auth check failed:', error);
+        window.location.replace(`${API_BASE_URL}/login/`);
       } finally {
         setLoading(false);
       }
     };
 
-    if (csrfToken) {
-      checkAuth();
-    }
+    checkAuth();
   }, [csrfToken]);
 
   const logout = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/logout/`, {
+        method: 'POST',
         credentials: 'include',
         headers: {
           'Accept': 'application/json',
+          'Content-Type': 'application/json',
           'X-CSRFToken': csrfToken,
         }
       });
       if (response.ok) {
         setUser(null);
-        window.location.href = `${API_BASE_URL}/login/`;
+        window.location.replace(`${API_BASE_URL}/login/`);
       }
     } catch (error) {
       console.error('Logout failed:', error);
@@ -94,12 +105,12 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => {
+export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-}; 
+} 
