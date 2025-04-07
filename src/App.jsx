@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import './App.css'
@@ -14,6 +14,7 @@ import DataAnalysis from './components/DataAnalysis'
 import DataVisualization from './components/DataVisualization'
 import AIInsights from './components/AIInsights'
 import ChatInterface from './components/ChatInterface'
+import { AuthProvider, useAuth } from './contexts/AuthContext'
 
 // Create dark theme
 const darkTheme = createTheme({
@@ -123,37 +124,83 @@ const darkTheme = createTheme({
   },
 })
 
-function App() {
+function ProtectedRoute({ children }) {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <Navigate to="https://deep.statistics.org.in/login/" replace />;
+  }
+
+  return children;
+}
+
+function AppContent() {
   const [dataSource, setDataSource] = useState(null)
   const [currentData, setCurrentData] = useState(null)
   const [statistics, setStatistics] = useState(null)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
   
   return (
+    <div className="flex h-screen overflow-hidden bg-black">
+      <Sidebar collapsed={sidebarCollapsed} onMenuClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
+      <div className="flex flex-col flex-1">
+        <Navbar />
+        <div className="flex-1 overflow-y-auto">
+          <div className="h-full bg-black ml-6">
+            <Routes>
+              <Route path="/" element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/upload" element={
+                <ProtectedRoute>
+                  <DataUpload setDataSource={setDataSource} setCurrentData={setCurrentData} />
+                </ProtectedRoute>
+              } />
+              <Route path="/analysis" element={
+                <ProtectedRoute>
+                  <DataAnalysis data={currentData} setStatistics={setStatistics} />
+                </ProtectedRoute>
+              } />
+              <Route path="/visualization" element={
+                <ProtectedRoute>
+                  <DataVisualization data={currentData} statistics={statistics} />
+                </ProtectedRoute>
+              } />
+              <Route path="/insights" element={
+                <ProtectedRoute>
+                  <AIInsights data={currentData} statistics={statistics} />
+                </ProtectedRoute>
+              } />
+              <Route path="/chat" element={
+                <ProtectedRoute>
+                  <ChatInterface data={currentData} statistics={statistics} />
+                </ProtectedRoute>
+              } />
+            </Routes>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Router>
-        <div className="flex h-screen overflow-hidden bg-black">
-          <Sidebar collapsed={sidebarCollapsed} onMenuClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
-          <div className="flex flex-col flex-1">
-            <Navbar />
-            <div className="flex-1 overflow-y-auto">
-              <div className="h-full bg-black ml-6">
-                <Routes>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/upload" element={<DataUpload setDataSource={setDataSource} setCurrentData={setCurrentData} />} />
-                  <Route path="/analysis" element={<DataAnalysis data={currentData} setStatistics={setStatistics} />} />
-                  <Route path="/visualization" element={<DataVisualization data={currentData} statistics={statistics} />} />
-                  <Route path="/insights" element={<AIInsights data={currentData} statistics={statistics} />} />
-                  <Route path="/chat" element={<ChatInterface data={currentData} statistics={statistics} />} />
-                </Routes>
-              </div>
-            </div>
-          </div>
-        </div>
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
       </Router>
     </ThemeProvider>
-  )
+  );
 }
 
 export default App
