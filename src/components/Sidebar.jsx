@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Tooltip, IconButton } from '@mui/material';
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Tooltip } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
@@ -9,9 +9,8 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import ChatIcon from '@mui/icons-material/Chat';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import MenuIcon from '@mui/icons-material/Menu';
 
-const Sidebar = ({ collapsed, onMenuClick }) => {
+const Sidebar = ({ collapsed }) => {
   const location = useLocation();
 
   const menuItems = [
@@ -30,46 +29,42 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
 
   return (
     <Box
+      className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''}`}
       sx={{
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         height: '100%',
-        width: collapsed ? '64px' : '240px',
-        bgcolor: 'background.paper',
-        borderRight: '1px solid rgba(255, 255, 255, 0.1)',
-        transition: 'all 0.3s ease',
         overflow: 'hidden',
       }}
     >
       <Box>
         <Box
           sx={{
-            position: 'relative',
-            height: '48px',
-            width: '100%',
-            bgcolor: 'background.paper',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: collapsed ? 'center' : 'flex-start',
+            padding: 2,
+            height: '64px',
           }}
         >
-          <IconButton
-            size="small"
-            color="inherit"
-            aria-label="toggle sidebar"
-            onClick={onMenuClick}
-            sx={{
-              position: 'absolute',
-              right: '12px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              '&:hover': {
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              }
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
+          {!collapsed && (
+            <Box component={Link} to="/" sx={{ textDecoration: 'none', color: 'white' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <InsightsIcon color="primary" sx={{ fontSize: 28, mr: 1 }} />
+                <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Deep Statistics</Box>
+              </Box>
+            </Box>
+          )}
+          {collapsed && (
+            <Tooltip title="Deep Statistics" placement="right">
+              <Box component={Link} to="/">
+                <InsightsIcon color="primary" sx={{ fontSize: 28 }} />
+              </Box>
+            </Tooltip>
+          )}
         </Box>
+        <Divider />
         <List>
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
@@ -80,11 +75,8 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
                   minHeight: 48,
                   justifyContent: collapsed ? 'center' : 'initial',
                   px: 2.5,
-                  bgcolor: location.pathname === item.path ? 'rgba(0, 162, 255, 0.1)' : 'transparent',
-                  borderLeft: location.pathname === item.path ? '3px solid #00a2ff' : 'none',
-                  '&:hover': {
-                    bgcolor: 'rgba(0, 162, 255, 0.05)',
-                  }
+                  backgroundColor: location.pathname === item.path ? 'rgba(99, 102, 241, 0.1)' : 'transparent',
+                  borderLeft: location.pathname === item.path ? '3px solid #6366f1' : 'none',
                 }}
               >
                 <Tooltip title={collapsed ? item.text : ''} placement="right">
@@ -93,7 +85,7 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
                       minWidth: 0,
                       mr: collapsed ? 0 : 3,
                       justifyContent: 'center',
-                      color: location.pathname === item.path ? 'primary.main' : 'text.secondary',
+                      color: location.pathname === item.path ? 'primary.main' : 'inherit',
                     }}
                   >
                     {item.icon}
@@ -104,7 +96,7 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
                     primary={item.text} 
                     sx={{ 
                       opacity: collapsed ? 0 : 1,
-                      color: location.pathname === item.path ? 'primary.main' : 'text.primary',
+                      color: location.pathname === item.path ? 'primary.main' : 'inherit',
                     }} 
                   />
                 )}
@@ -114,7 +106,7 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
         </List>
       </Box>
       <Box>
-        <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+        <Divider />
         <List>
           {bottomMenuItems.map((item) => (
             <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
@@ -125,9 +117,6 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
                   minHeight: 48,
                   justifyContent: collapsed ? 'center' : 'initial',
                   px: 2.5,
-                  '&:hover': {
-                    bgcolor: 'rgba(0, 162, 255, 0.05)',
-                  }
                 }}
               >
                 <Tooltip title={collapsed ? item.text : ''} placement="right">
@@ -136,7 +125,6 @@ const Sidebar = ({ collapsed, onMenuClick }) => {
                       minWidth: 0,
                       mr: collapsed ? 0 : 3,
                       justifyContent: 'center',
-                      color: 'text.secondary',
                     }}
                   >
                     {item.icon}
