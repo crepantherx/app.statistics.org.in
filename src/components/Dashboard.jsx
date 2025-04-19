@@ -26,7 +26,7 @@ const pieData = [
   { name: 'Parquet Files', value: 10 },
 ];
 
-const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#14b8a6'];
+const COLORS = ['#00a2ff', '#33b4ff', '#0071b2', '#ff3366'];
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -42,71 +42,69 @@ const Dashboard = () => {
       description: 'Upload your data files or connect to external data sources', 
       icon: <UploadFileIcon sx={{ fontSize: 40 }} />, 
       path: '/upload',
-      color: '#6366f1'
+      color: '#00a2ff'
     },
     { 
       title: 'Data Analysis', 
       description: 'Get comprehensive statistical analysis of your data', 
       icon: <AnalyticsIcon sx={{ fontSize: 40 }} />, 
       path: '/analysis',
-      color: '#8b5cf6'
+      color: '#33b4ff'
     },
     { 
       title: 'Visualizations', 
       description: 'Create beautiful charts and graphs from your data', 
       icon: <BarChartIcon sx={{ fontSize: 40 }} />, 
       path: '/visualization',
-      color: '#ec4899'
+      color: '#0071b2'
     },
     { 
       title: 'AI Insights', 
       description: 'Get AI-powered insights and predictions from your data', 
       icon: <InsightsIcon sx={{ fontSize: 40 }} />, 
       path: '/insights',
-      color: '#14b8a6'
+      color: '#ff3366'
     },
     { 
       title: 'Chat Interface', 
       description: 'Ask questions about your data using natural language', 
       icon: <ChatIcon sx={{ fontSize: 40 }} />, 
       path: '/chat',
-      color: '#f97316'
+      color: '#ff6b91'
     },
   ];
 
   return (
-    <div className="px-6 py-0" style={{ margin: '25px' }}>
-      <Typography 
-        variant="h4" 
-        component="h1" 
-        sx={{ 
-          fontSize: '2rem',
-          lineHeight: 1.2,
-          fontWeight: 'bold',
-          mt: 0,
-        }}
-      >
+    <Box sx={{ p: 3 }}>
+      {/* <Typography variant="h4" component="h1" gutterBottom sx={{ 
+        fontWeight: 'bold',
+        color: '#fff',
+        textShadow: '0 0 10px rgba(0, 162, 255, 0.5)'
+      }}>
         Welcome to Deep Statistics
-      </Typography>
-      <Typography 
-        variant="subtitle1" 
-        className="text-gray-400" 
-        sx={{ 
-          lineHeight: 1.2,
-          mb: 3
-        }}
-      >
-        Your AI-powered data analysis platform
+      </Typography> */}
+      <Typography variant="subtitle1" sx={{ 
+        color: 'text.secondary',
+        mb: 4,
+        textShadow: '0 0 8px rgba(0, 162, 255, 0.3)'
+      }}>
+        AI-powered data analysis platform
       </Typography>
 
       {/* Quick Start */}
-      <Paper className="p-6 mb-4">
-        <Box className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6">
+      <Paper className="data-card" sx={{ mb: 4, p: 3 }}>
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: { xs: 'column', md: 'row' }, 
+          alignItems: { xs: 'start', md: 'center' }, 
+          justifyContent: 'space-between',
+          mb: 3
+        }}>
           <Box>
-            <Typography variant="h5" className="font-bold mb-2">
+            <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1 }}>
               Quick Start
             </Typography>
-            <Typography variant="body1" className="text-gray-400">
+            <Typography variant="body1" color="text.secondary">
               Upload your data to get started with automated analysis
             </Typography>
           </Box>
@@ -116,7 +114,7 @@ const Dashboard = () => {
             size="large"
             startIcon={<UploadFileIcon />}
             onClick={() => navigate('/upload')}
-            className="mt-4 md:mt-0"
+            sx={{ mt: { xs: 2, md: 0 } }}
           >
             Upload Data
           </Button>
@@ -126,24 +124,32 @@ const Dashboard = () => {
           {features.map((feature) => (
             <Grid item xs={12} sm={6} md={4} key={feature.title}>
               <Card 
-                className="data-card h-full" 
                 sx={{ 
-                  '&:hover': { 
+                  height: '100%',
+                  background: 'linear-gradient(45deg, #000000 30%, #111111 90%)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
                     borderColor: feature.color,
+                    boxShadow: `0 0 20px ${feature.color}40`,
                     '& .feature-icon': {
                       color: feature.color,
                     }
-                  } 
+                  }
                 }}
               >
                 <CardContent>
                   <Box 
-                    className="feature-icon mb-4 transition-colors" 
-                    sx={{ color: 'text.secondary' }}
+                    className="feature-icon"
+                    sx={{ 
+                      mb: 2,
+                      color: 'text.secondary',
+                      transition: 'color 0.3s ease-in-out'
+                    }}
                   >
                     {feature.icon}
                   </Box>
-                  <Typography variant="h6" className="font-bold mb-2">
+                  <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
                     {feature.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
@@ -154,6 +160,7 @@ const Dashboard = () => {
                   <Button 
                     size="small" 
                     onClick={() => navigate(feature.path)}
+                    sx={{ color: feature.color }}
                   >
                     Explore
                   </Button>
@@ -164,35 +171,137 @@ const Dashboard = () => {
         </Grid>
       </Paper>
 
+      {/* Recent Datasets */}
+      <Paper className="data-card" sx={{ mb: 4, p: 3 }}>
+        <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 3 }}>
+          Recent Datasets
+        </Typography>
+        {recentDatasets.length > 0 ? (
+          <Box sx={{ overflowX: 'auto' }}>
+            <table style={{ 
+              minWidth: '100%',
+              borderCollapse: 'separate',
+              borderSpacing: '0'
+            }}>
+              <thead>
+                <tr>
+                  <th style={{ 
+                    padding: '12px 24px',
+                    textAlign: 'left',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}>Name</th>
+                  <th style={{ 
+                    padding: '12px 24px',
+                    textAlign: 'left',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}>Type</th>
+                  <th style={{ 
+                    padding: '12px 24px',
+                    textAlign: 'left',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}>Date</th>
+                  <th style={{ 
+                    padding: '12px 24px',
+                    textAlign: 'left',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}>Size</th>
+                  <th style={{ 
+                    padding: '12px 24px',
+                    textAlign: 'right',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentDatasets.map((dataset) => (
+                  <tr key={dataset.id} style={{
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+                  }}>
+                    <td style={{ padding: '16px 24px' }}>{dataset.name}</td>
+                    <td style={{ padding: '16px 24px' }}>{dataset.type}</td>
+                    <td style={{ padding: '16px 24px' }}>{dataset.date}</td>
+                    <td style={{ padding: '16px 24px' }}>{dataset.size}</td>
+                    <td style={{ padding: '16px 24px', textAlign: 'right' }}>
+                      <Button 
+                        size="small" 
+                        onClick={() => navigate('/analysis')}
+                        sx={{ color: '#00a2ff' }}
+                      >
+                        Analyze
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Box>
+        ) : (
+          <Box sx={{ textAlign: 'center', py: 4 }}>
+            <Typography variant="body1" sx={{ color: 'text.secondary', mb: 2 }}>
+              No recent datasets found
+            </Typography>
+            <Button 
+              variant="outlined" 
+              color="primary"
+              startIcon={<UploadFileIcon />}
+              onClick={() => navigate('/upload')}
+            >
+              Upload Your First Dataset
+            </Button>
+          </Box>
+        )}
+      </Paper>
+
       {/* Dashboard Stats */}
-      <Grid container spacing={3} className="mb-4">
+      <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
-          <Paper className="data-card p-6">
-            <Typography variant="h6" className="font-bold mb-6">
+          <Paper className="data-card" sx={{ p: 3 }}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 3 }}>
               Activity Overview
             </Typography>
-            <Box sx={{ height: 400, width: '100%' }}>
+            <Box sx={{ height: 400, width:600 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart
                   data={activityData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#2d2d2d" />
-                  <XAxis dataKey="name" stroke="#888" />
-                  <YAxis stroke="#888" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.1)" />
+                  <XAxis dataKey="name" stroke="rgba(255, 255, 255, 0.7)" />
+                  <YAxis stroke="rgba(255, 255, 255, 0.7)" />
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: '#1e1e1e', 
-                      borderColor: '#2d2d2d',
-                      color: '#fff',
-                      padding: '10px'
+                      backgroundColor: '#000000',
+                      borderColor: '#00a2ff',
+                      border: '1px solid',
+                      borderRadius: '4px',
+                      boxShadow: '0 0 10px rgba(0, 162, 255, 0.2)'
                     }} 
                   />
                   <Area 
                     type="monotone" 
                     dataKey="value" 
-                    stroke="#6366f1" 
-                    fill="#6366f1" 
+                    stroke="#00a2ff" 
+                    fill="#00a2ff" 
                     fillOpacity={0.2} 
                     strokeWidth={2}
                   />
@@ -202,11 +311,11 @@ const Dashboard = () => {
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Paper className="data-card p-6 h-full">
-            <Typography variant="h6" className="font-bold mb-6">
+          <Paper className="data-card" sx={{ p: 3, height: '100%'}}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 3 }}>
               Data Sources
             </Typography>
-            <Box sx={{ height: 400, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Box sx={{ height: 400, width:600, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -222,15 +331,19 @@ const Dashboard = () => {
                     labelLine={true}
                   >
                     {pieData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={COLORS[index % COLORS.length]}
+                      />
                     ))}
                   </Pie>
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: '#1e1e1e', 
-                      borderColor: '#2d2d2d',
-                      color: '#fff',
-                      padding: '10px'
+                      backgroundColor: '#000000',
+                      borderColor: '#00a2ff',
+                      border: '1px solid',
+                      borderRadius: '4px',
+                      boxShadow: '0 0 10px rgba(0, 162, 255, 0.2)'
                     }} 
                   />
                 </PieChart>
@@ -239,56 +352,7 @@ const Dashboard = () => {
           </Paper>
         </Grid>
       </Grid>
-
-      {/* Recent Datasets */}
-      <Paper className="data-card p-6">
-        <Typography variant="h6" className="font-bold mb-4">
-          Recent Datasets
-        </Typography>
-        {recentDatasets.length > 0 ? (
-          <Box className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-700">
-              <thead>
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Type</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Date</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Size</th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-700">
-                {recentDatasets.map((dataset) => (
-                  <tr key={dataset.id}>
-                    <td className="px-6 py-4 whitespace-nowrap">{dataset.name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{dataset.type}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{dataset.date}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{dataset.size}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right">
-                      <Button size="small" onClick={() => navigate('/analysis')}>Analyze</Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </Box>
-        ) : (
-          <Box className="text-center py-8">
-            <Typography variant="body1" className="text-gray-400 mb-4">
-              No recent datasets found
-            </Typography>
-            <Button 
-              variant="outlined" 
-              color="primary"
-              startIcon={<UploadFileIcon />}
-              onClick={() => navigate('/upload')}
-            >
-              Upload Your First Dataset
-            </Button>
-          </Box>
-        )}
-      </Paper>
-    </div>
+    </Box>
   );
 };
 

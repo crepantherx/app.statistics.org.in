@@ -1,160 +1,62 @@
+import { useAuth } from '../contexts/AuthContext';
 import { useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, InputBase, Badge, Menu, MenuItem, Box } from '@mui/material';
-import { styled, alpha } from '@mui/material/styles';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import SettingsIcon from '@mui/icons-material/Settings';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import { Link } from 'react-router-dom';
 
-// Styled components
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
-
-const Navbar = ({ onMenuClick }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My Account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
-    </Menu>
-  );
+const Navbar = () => {
+  const { user, loading, logout } = useAuth();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
-    <AppBar position="static" elevation={0} sx={{ height: '48px', minHeight: '48px' }}>
-      <Toolbar sx={{ minHeight: '48px !important', height: '48px', px: 2 }}>
-        <IconButton
-          size="small"
-          edge="start"
-          color="inherit"
-          aria-label="open drawer"
-          sx={{ mr: 2 }}
-          onClick={onMenuClick}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography
-          variant="h6"
-          noWrap
-          component={Link}
-          to="/"
-          sx={{ display: { xs: 'none', sm: 'block' }, textDecoration: 'none', color: 'white' }}
-          className="font-bold"
+    <nav className="bg-black border-b border-gray-800" style={{ height: '48px', minHeight: '48px' }}>
+      <div className="flex justify-between items-center h-full px-4">
+        <div 
+          className="text-white hover:opacity-80 transition-opacity cursor-pointer" 
+          style={{ fontFamily: 'Tourney', fontSize: '1.2rem' }}
         >
           Deep Statistics
-        </Typography>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search data…"
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </Search>
-        <Box sx={{ flexGrow: 1 }} />
-        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          <IconButton size="large" aria-label="show help" color="inherit">
-            <HelpOutlineIcon />
-          </IconButton>
-          <IconButton
-            size="large"
-            aria-label="show 17 new notifications"
-            color="inherit"
-          >
-            <Badge badgeContent={3} color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton
-            size="large"
-            aria-label="settings"
-            color="inherit"
-          >
-            <SettingsIcon />
-          </IconButton>
-          <IconButton
-            size="large"
-            edge="end"
-            aria-label="account of current user"
-            aria-controls={menuId}
-            aria-haspopup="true"
-            onClick={handleProfileMenuOpen}
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
-        </Box>
-      </Toolbar>
-      {renderMenu}
-    </AppBar>
+        </div>
+        <div className="flex items-center h-full">
+          {loading ? (
+            <div className="text-white text-sm">Loading...</div>
+          ) : (
+            <div className="relative h-full flex items-center">
+              <button 
+                className="flex flex-col items-center justify-center h-full px-2 cursor-pointer bg-transparent border-0 outline-none focus:outline-none"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              >
+                <svg className="w-[14px] h-[14px] text-white mb-0.5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/>
+                </svg>
+                <span className="text-white text-[11px]">
+                  {user ? user.username : 'Profile'}
+                </span>
+              </button>
+              
+              {dropdownOpen && user && (
+                <div className="absolute right-0 top-full mt-1 py-1 w-32 bg-black border border-gray-800 rounded shadow-xl">
+                  <button
+                    onClick={logout}
+                    className="block w-full text-left px-3 py-1 text-sm text-white hover:bg-gray-900 transition-colors"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+
+              {dropdownOpen && !user && (
+                <div className="absolute right-0 top-full mt-1 py-1 w-32 bg-black border border-gray-800 rounded shadow-xl">
+                  <a
+                    href="http://localhost:8000/login/"
+                    className="block w-full text-left px-3 py-1 text-sm text-white hover:bg-gray-900 transition-colors"
+                  >
+                    Login
+                  </a>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
   );
 };
 

@@ -23,6 +23,7 @@ import * as XLSX from 'xlsx';
 import axios from 'axios';
 // Apache Arrow for Parquet file handling
 import { tableFromArrays } from 'apache-arrow';
+import PageWrapper from './PageWrapper';
 
 // Mock data sources
 const mockDataSources = [
@@ -1073,7 +1074,7 @@ const DataUpload = ({ setDataSource, setCurrentData }) => {
   };
   
   return (
-    <div className="p-4">
+    <PageWrapper>
       <Typography variant="h4" component="h1" gutterBottom className="font-bold">
         Data Upload
       </Typography>
@@ -1384,7 +1385,7 @@ const DataUpload = ({ setDataSource, setCurrentData }) => {
         onClose={handleCloseSnackbar}
         message={snackbarMessage}
       />
-    </div>
+    </PageWrapper>
   );
 };
 

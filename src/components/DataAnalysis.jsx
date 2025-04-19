@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Typography, Paper, Grid, Box, Tabs, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import PageWrapper from './PageWrapper';
 
 const DataAnalysis = ({ data, setStatistics }) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -284,7 +285,7 @@ const DataAnalysis = ({ data, setStatistics }) => {
   }
 
   return (
-    <div className="p-4">
+    <PageWrapper>
       <Typography variant="h4" component="h1" gutterBottom className="font-bold">
         Data Analysis
       </Typography>
@@ -465,7 +466,7 @@ const DataAnalysis = ({ data, setStatistics }) => {
           </Grid>
         </Paper>
       )}
-    </div>
+    </PageWrapper>
   );
 };
 

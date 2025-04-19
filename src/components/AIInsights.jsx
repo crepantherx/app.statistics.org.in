@@ -9,6 +9,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, ScatterChart, Scatter, 
          XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import PageWrapper from './PageWrapper';
 
 // Colors for charts
 const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#14b8a6', '#f97316', '#f59e0b', '#10b981', '#3b82f6'];
@@ -39,26 +40,28 @@ const AIInsights = ({ data, statistics }) => {
   // If no data or statistics, show message to upload data
   if (!data || !statistics) {
     return (
-      <div className="p-4">
-        <Typography variant="h4" component="h1" gutterBottom className="font-bold">
-          AI Insights
-        </Typography>
-        <Typography variant="subtitle1" gutterBottom className="text-gray-400 mb-8">
-          Get AI-powered insights and predictions from your data
-        </Typography>
-        
-        <Paper className="data-card p-6 text-center">
-          <Typography variant="h6" className="mb-4">
-            No data available for insights
+      <PageWrapper>
+        <div className="p-4">
+          <Typography variant="h4" component="h1" gutterBottom className="font-bold">
+            AI Insights
           </Typography>
-          <Typography variant="body1" className="text-gray-400 mb-4">
-            Please upload data first to generate AI insights
+          <Typography variant="subtitle1" gutterBottom className="text-gray-400 mb-8">
+            Get AI-powered insights and predictions from your data
           </Typography>
-          <Box className="mt-4">
-            <InsightsIcon color="primary" sx={{ fontSize: 48 }} />
-          </Box>
-        </Paper>
-      </div>
+          
+          <Paper className="data-card p-6 text-center">
+            <Typography variant="h6" className="mb-4">
+              No data available for insights
+            </Typography>
+            <Typography variant="body1" className="text-gray-400 mb-4">
+              Please upload data first to generate AI insights
+            </Typography>
+            <Box className="mt-4">
+              <InsightsIcon color="primary" sx={{ fontSize: 48 }} />
+            </Box>
+          </Paper>
+        </div>
+      </PageWrapper>
     );
   }
 
@@ -181,8 +184,8 @@ const AIInsights = ({ data, statistics }) => {
           <YAxis dataKey="name" type="category" width={150} stroke="#888" />
           <Tooltip 
             contentStyle={{ 
-              backgroundColor: '#1e1e1e', 
-              borderColor: '#2d2d2d',
+              backgroundColor: '#000000',
+              borderColor: '#000000',
               color: '#fff' 
             }} 
           />
@@ -208,8 +211,8 @@ const AIInsights = ({ data, statistics }) => {
           <YAxis stroke="#888" />
           <Tooltip 
             contentStyle={{ 
-              backgroundColor: '#1e1e1e', 
-              borderColor: '#2d2d2d',
+              backgroundColor: '#000000',
+              borderColor: '#050505',
               color: '#fff' 
             }} 
           />
@@ -220,153 +223,155 @@ const AIInsights = ({ data, statistics }) => {
   };
 
   return (
-    <div className="p-4">
-      <Typography variant="h4" component="h1" gutterBottom className="font-bold">
-        AI Insights
-      </Typography>
-      <Typography variant="subtitle1" gutterBottom className="text-gray-400 mb-8">
-        Get AI-powered insights and predictions from your data
-      </Typography>
-      
-      {loading ? (
-        <Paper className="data-card p-6 mb-8">
-          <Box className="text-center">
-            <Typography variant="h6" className="mb-4">
-              Analyzing your data with AI...
-            </Typography>
-            <LinearProgress color="primary" className="mb-4" />
-            <Typography variant="body2" className="text-gray-400">
-              Our AI is examining patterns, correlations, and anomalies in your dataset
-            </Typography>
-          </Box>
-        </Paper>
-      ) : (
-        <>
-          {/* Key Insights */}
+    <PageWrapper>
+      <div className="p-4">
+        <Typography variant="h4" component="h1" gutterBottom className="font-bold">
+          AI Insights
+        </Typography>
+        <Typography variant="subtitle1" gutterBottom className="text-gray-400 mb-8">
+          Get AI-powered insights and predictions from your data
+        </Typography>
+        
+        {loading ? (
           <Paper className="data-card p-6 mb-8">
-            <Typography variant="h6" className="font-bold mb-4">
-              Key Insights
-            </Typography>
-            <Grid container spacing={3}>
-              {insights.map((insight, index) => (
-                <Grid item xs={12} md={6} key={index}>
-                  <Card className="data-card h-full">
-                    <CardContent>
-                      <Box className="flex items-start">
-                        <Box 
-                          className="mr-3 p-2 rounded-full" 
-                          sx={{ 
-                            bgcolor: insight.type === 'warning' ? 'error.dark' : 
-                                    insight.type === 'success' ? 'success.dark' : 
-                                    insight.type === 'positive' ? 'success.dark' : 
-                                    insight.type === 'negative' ? 'error.dark' : 
-                                    'primary.dark' 
-                          }}
-                        >
-                          {insight.icon}
-                        </Box>
-                        <Box>
-                          <Typography variant="h6" className="font-bold mb-1">
-                            {insight.title}
-                          </Typography>
-                          <Typography variant="body2" className="text-gray-400">
-                            {insight.description}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
+            <Box className="text-center">
+              <Typography variant="h6" className="mb-4">
+                Analyzing your data with AI...
+              </Typography>
+              <LinearProgress color="primary" className="mb-4" />
+              <Typography variant="body2" className="text-gray-400">
+                Our AI is examining patterns, correlations, and anomalies in your dataset
+              </Typography>
+            </Box>
           </Paper>
-
-          {/* Correlations */}
-          {correlations.length > 0 && (
+        ) : (
+          <>
+            {/* Key Insights */}
             <Paper className="data-card p-6 mb-8">
               <Typography variant="h6" className="font-bold mb-4">
-                Top Correlations
-              </Typography>
-              <Box className="mb-4">
-                {renderCorrelationChart()}
-              </Box>
-              <Typography variant="body2" className="text-gray-400 mt-2">
-                Values closer to 1 or -1 indicate stronger relationships between variables
-              </Typography>
-            </Paper>
-          )}
-
-          {/* Distributions */}
-          {distributions.length > 0 && (
-            <Paper className="data-card p-6 mb-8">
-              <Typography variant="h6" className="font-bold mb-4">
-                Key Distributions
+                Key Insights
               </Typography>
               <Grid container spacing={3}>
-                {distributions.slice(0, 4).map((distribution, index) => (
+                {insights.map((insight, index) => (
                   <Grid item xs={12} md={6} key={index}>
                     <Card className="data-card h-full">
                       <CardContent>
-                        <Typography variant="subtitle1" className="font-bold mb-2">
-                          {distribution.column}
-                        </Typography>
-                        {renderDistributionChart(distribution)}
-                        <Box className="mt-2">
-                          <Chip 
-                            size="small" 
-                            label={`${distribution.uniqueValues} unique values`} 
-                            className="mr-2 mb-2" 
-                          />
-                          {distribution.skew && (
+                        <Box className="flex items-start">
+                          <Box 
+                            className="mr-3 p-2 rounded-full" 
+                            sx={{ 
+                              bgcolor: insight.type === 'warning' ? 'error.dark' : 
+                                      insight.type === 'success' ? 'success.dark' : 
+                                      insight.type === 'positive' ? 'success.dark' : 
+                                      insight.type === 'negative' ? 'error.dark' : 
+                                      'primary.dark' 
+                            }}
+                          >
+                            {insight.icon}
+                          </Box>
+                          <Box>
+                            <Typography variant="h6" className="font-bold mb-1">
+                              {insight.title}
+                            </Typography>
+                            <Typography variant="body2" className="text-gray-400">
+                              {insight.description}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            </Paper>
+
+            {/* Correlations */}
+            {correlations.length > 0 && (
+              <Paper className="data-card p-6 mb-8">
+                <Typography variant="h6" className="font-bold mb-4">
+                  Top Correlations
+                </Typography>
+                <Box className="mb-4">
+                  {renderCorrelationChart()}
+                </Box>
+                <Typography variant="body2" className="text-gray-400 mt-2">
+                  Values closer to 1 or -1 indicate stronger relationships between variables
+                </Typography>
+              </Paper>
+            )}
+
+            {/* Distributions */}
+            {distributions.length > 0 && (
+              <Paper className="data-card p-6 mb-8">
+                <Typography variant="h6" className="font-bold mb-4">
+                  Key Distributions
+                </Typography>
+                <Grid container spacing={3}>
+                  {distributions.slice(0, 4).map((distribution, index) => (
+                    <Grid item xs={12} md={6} key={index}>
+                      <Card className="data-card h-full">
+                        <CardContent>
+                          <Typography variant="subtitle1" className="font-bold mb-2">
+                            {distribution.column}
+                          </Typography>
+                          {renderDistributionChart(distribution)}
+                          <Box className="mt-2">
                             <Chip 
                               size="small" 
-                              label={`Skew: ${distribution.skew.toFixed(2)}`} 
+                              label={`${distribution.uniqueValues} unique values`} 
                               className="mr-2 mb-2" 
-                              color={Math.abs(distribution.skew) > 0.5 ? 'warning' : 'default'}
                             />
-                          )}
-                        </Box>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
-            </Paper>
-          )}
+                            {distribution.skew && (
+                              <Chip 
+                                size="small" 
+                                label={`Skew: ${distribution.skew.toFixed(2)}`} 
+                                className="mr-2 mb-2" 
+                                color={Math.abs(distribution.skew) > 0.5 ? 'warning' : 'default'}
+                              />
+                            )}
+                          </Box>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Paper>
+            )}
 
-          {/* Outliers */}
-          {outliers.length > 0 && (
-            <Paper className="data-card p-6 mb-8">
-              <Typography variant="h6" className="font-bold mb-4">
-                Detected Outliers
-              </Typography>
-              <Grid container spacing={3}>
-                {outliers.map((outlier, index) => (
-                  <Grid item xs={12} md={4} lg={3} key={index}>
-                    <Card className="data-card h-full">
-                      <CardContent>
-                        <Typography variant="subtitle1" className="font-bold mb-2">
-                          {outlier.column}
-                        </Typography>
-                        <Box className="flex items-center mb-2">
-                          <WarningIcon color="error" className="mr-2" />
-                          <Typography variant="h6">
-                            {outlier.count} outliers
+            {/* Outliers */}
+            {outliers.length > 0 && (
+              <Paper className="data-card p-6 mb-8">
+                <Typography variant="h6" className="font-bold mb-4">
+                  Detected Outliers
+                </Typography>
+                <Grid container spacing={3}>
+                  {outliers.map((outlier, index) => (
+                    <Grid item xs={12} md={4} lg={3} key={index}>
+                      <Card className="data-card h-full">
+                        <CardContent>
+                          <Typography variant="subtitle1" className="font-bold mb-2">
+                            {outlier.column}
                           </Typography>
-                        </Box>
-                        <Typography variant="body2" className="text-gray-400">
-                          {outlier.percentage}% of values
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
-            </Paper>
-          )}
-        </>
-      )}
-    </div>
+                          <Box className="flex items-center mb-2">
+                            <WarningIcon color="error" className="mr-2" />
+                            <Typography variant="h6">
+                              {outlier.count} outliers
+                            </Typography>
+                          </Box>
+                          <Typography variant="body2" className="text-gray-400">
+                            {outlier.percentage}% of values
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Paper>
+            )}
+          </>
+        )}
+      </div>
+    </PageWrapper>
   );
 };
 
