@@ -3,6 +3,7 @@ import { Typography, Paper, Grid, Box, Tabs, Tab, FormControl, InputLabel, Selec
 import { useNavigate } from 'react-router-dom';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, ScatterChart, Scatter, AreaChart, Area, 
          XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import PageWrapper from './PageWrapper';
 
 // Colors for charts
 const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#14b8a6', '#f97316', '#f59e0b', '#10b981', '#3b82f6'];
@@ -101,12 +102,12 @@ const DataVisualization = ({ data, statistics }) => {
   };
 
   return (
-    <div className="p-4">
+    <PageWrapper>
       <Typography variant="h4" component="h1" gutterBottom className="font-bold">
         Data Visualization
       </Typography>
       <Typography variant="subtitle1" gutterBottom className="text-gray-400 mb-8">
-        Visualize your data with interactive charts
+        Create beautiful charts and graphs from your data
       </Typography>
       
       <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
@@ -472,7 +473,7 @@ const DataVisualization = ({ data, statistics }) => {
           </Paper>
         </>
       )}
-    </div>
+    </PageWrapper>
   );
 };
 
