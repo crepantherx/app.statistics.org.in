@@ -90,19 +90,23 @@ const Navbar = ({ onMenuClick }) => {
   return (
     <AppBar position="static" elevation={0} sx={{ height: '48px', minHeight: '48px' }}>
       <Toolbar sx={{ minHeight: '48px !important', height: '48px', px: 2 }}>
+        <IconButton
+          size="small"
+          edge="start"
+          color="inherit"
+          aria-label="open drawer"
+          sx={{ mr: 2 }}
+          onClick={onMenuClick}
+        >
+          <MenuIcon />
+        </IconButton>
         <Typography
           variant="h6"
           noWrap
           component={Link}
           to="/"
-          sx={{ 
-            display: { xs: 'none', sm: 'block' }, 
-            textDecoration: 'none', 
-            color: 'white',
-            fontFamily: 'Tourney',
-            fontSize: '1.2rem',
-            fontWeight: 'bold'
-          }}
+          sx={{ display: { xs: 'none', sm: 'block' }, textDecoration: 'none', color: 'white' }}
+          className="font-bold"
         >
           Deep Statistics
         </Typography>
